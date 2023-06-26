@@ -1,5 +1,15 @@
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MONGODB_URL = os.environ.get("mongodb+srv://hellen23:sparta@cluster0.p9rciek.mongodb.net/?retryWrites=true&w=majority")
+DB_NAME = os.environ.get("dbsparta")
 
 client = MongoClient('mongodb+srv://hellen23:sparta@cluster0.p9rciek.mongodb.net/?retryWrites=true&w=majority')
 
@@ -20,7 +30,7 @@ def homework_post():
         'comment': comment_receive,
     }
     db.fanmessages.insert_one(doc)
-    return jsonify({'msg':'POST request!'})
+    return jsonify({'msg':'Commend Posted!'})
 
 @app.route("/homework", methods=["GET"])
 def homework_get():
